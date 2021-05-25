@@ -1,0 +1,43 @@
+name: Run Task
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 7 * * 2'
+
+jobs:
+  post-data:
+    env:
+      COOKIE: ${{ secrets.COOKIE }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      if: env.COOKIE
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/run_in_Actions/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Set time zone
+      if: env.COOKIE
+      run: sudo timedatectl set-timezone 'Asia/Shanghai'
+
+    - name: Install dependencies
+      if: env.COOKIE
+      run: |
+        pip install -r requirements.txt
+
+    - name: Build and publish
+      if: env.COOKIE
+      run: |
+        echo "$COOKIE" > ./cookie.txt
+        python main.py
