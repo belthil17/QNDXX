@@ -29,13 +29,11 @@ def run(Cookie):
         print(r.text)
 
 
-#腾讯云函数入口
 def main(event, context):
     with open('./config.json', 'r', encoding='utf-8') as f:
         Cookie = json.load(f)['Cookie']
-    print(Cookie)
     run(Cookie)
 
-# 主函数入口
+
 if __name__ == '__main__':
     main("","")
