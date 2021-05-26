@@ -2,7 +2,7 @@
 echo "开始拷贝必要文件"
 sudo cp main.py ./serverless
 sudo cp requirements.txt ./serverless
-sudo cp cookie.txt ./serverless
+sudo cp Cookie.json ./serverless
 cd ./serverless
 
 #安装云函数需要的依赖库到severless文件夹
