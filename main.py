@@ -32,7 +32,7 @@ def run(Cookie):
 #腾讯云函数入口
 def main(event, context):
     with open('./Cookie.json', 'r', encoding='utf-8') as f:
-        Cookie = f.read()[:-1]
+        Cookie = json.load(f)['Cookie']
     print(Cookie)
     run(Cookie)
 
