@@ -1,7 +1,7 @@
 import requests, json, time
 
 
-def main():
+def run(Cookie):
     url = 'http://home.yngqt.org.cn/qndxx/xuexi.ashx'
     headers = {
         "Host": "home.yngqt.org.cn",
@@ -29,7 +29,12 @@ def main():
         print(r.text)
 
 
-if __name__ == '__main__':
+#腾讯云函数入口
+def main(event, context):
     with open('./cookie.txt', 'r', encoding='utf-8') as f:
         Cookie = f.read()[:-1]
-    main()
+    run(Cookie)
+
+# 主函数入口
+if __name__ == '__main__':
+    main("","")
