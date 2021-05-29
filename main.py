@@ -15,18 +15,21 @@ def run(Cookie):
         "Referer": "http://home.yngqt.org.cn/qndxx/",
         "Cookie": Cookie
     }
-    body = {
+    data = {
         "txtid": time.localtime()[7] // 7 + 51
     }
-    r = requests.post(url, data=json.dumps(body), headers=headers)
-    if r.ok:
-        res = r.json()
-        if res['code'] == '100' or res['code'] == '102':
-            print(res['message'])
+    try:
+        r = requests.post(url, data=json.dumps(data), headers=headers)
+        if r.ok:
+            res = r.json()
+            if res['code'] == '100' or res['code'] == '102':
+                print(res['message'])
+            else:
+                print(res)
         else:
-            print(res)
-    else:
-        print(r.text)
+            print(r.text)
+    except Exception as e:
+        print(e)
 
 
 def main(event, context):
