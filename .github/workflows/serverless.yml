@@ -7,25 +7,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
     steps:
     - uses: actions/checkout@v2
-    - name: deploy
+    - name: 执行部署脚本
       env:
           SERVERLESS_PLATFORM_VENDOR: tencent
           USERS_COVER: ${{ secrets.USERS_COVER }}
+          COOKIE: ${{ secrets.COOKIE }}
           TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
           TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
       run: |
+          echo "COOKIE" > ./cookie.txt
           echo "$USERS_COVER" > ./config.json
           sudo chmod +x ./serverless/deploy.sh
           bash ./serverless/deploy.sh
-        
-    - name: Delete Workflow Runs # 删除执行日志
-      uses: Mattraks/delete-workflow-runs@main
-      with:
-        token: ${{ github.token }}
-        repository: ${{ github.repository }}
-        retain_days: 1
-        keep_minimum_runs: 0
 
