@@ -2,7 +2,7 @@ name: 'Serverless'
 
 on:
  push:
-  workflow_dispatch:
+ workflow_dispatch:
 
 jobs:
   deploy:
