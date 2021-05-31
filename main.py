@@ -73,23 +73,14 @@ def main(event, context):
             else:
                 print(f'每周阅读失败，准备重试……')
                 i -= 1
-        i = 3
-        while i:
-            result = everyDay(Cookie)
-            if result:
-                break
-            else:
-                print(f'每日签到失败，准备重试……')
-                i -= 1
-    else:
-        i = 3
-        while i:
-            result = everyDay(Cookie)
-            if result:
-                break
-            else:
-                print(f'每日签到失败，准备重试……')
-                i -= 1
+    i = 3
+    while i:
+        result = everyDay(Cookie)
+        if result:
+            break
+        else:
+            print(f'每日签到失败，准备重试……')
+            i -= 1
 
 
 if __name__ == '__main__':
