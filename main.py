@@ -72,8 +72,10 @@ def everyDay(Cookie): # 每日签到领积分
 
 
 def main(event, context):
-    with open('./config.json', 'r', encoding='utf-8') as f:
-        Cookie = json.load(f)['Cookie']
+    # with open('./config.json', 'r', encoding='utf-8') as f:
+    #     Cookie = json.load(f)['Cookie']
+    with open('./cookie.txt', 'r', encoding='utf-8') as f:
+        Cookie = f.readline()[:-1]
     if time.localtime()[6] in [0,1,2]: # 周一、周二、周三各学习一遍
         i = 3
         while i:
