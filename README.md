@@ -49,6 +49,8 @@
 - 开通云函数 `SCF` 的腾讯云账号，在 [访问秘钥页面](https://console.cloud.tencent.com/cam/capi) 获取账号的 `SecretID`，`SecretKey`
 - 依次登录 [SCF 云函数控制台](https://console.cloud.tencent.com/scf) 和 [SLS 控制台](https://console.cloud.tencent.com/sls) 开通相关服务，确保您已开通服务并创建相应 [服务角色](https://console.cloud.tencent.com/cam/role) **SCF_QcsRole、SLS_QcsRole**
 - 开启抓包软件, 在`微信` 中打开 `云南共青团` 公共号的大学习页面, 把 `header` 中的 `Cookie` 值保存下来.
+> 正确的cookie值应具备以下格式
+>> `ASP.NET_SessionId=xxx; DianCMSUser=UserId=xxx&UserName=xxx&PassWord=xxx&NickName=xxx&Session=xxx; DianCMS_qndxx_71=1; DianCMS_qndxx_70=1; DianCMS_qndxx_69=1`
 
 ### 3.将参数填到Secrets
 
