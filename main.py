@@ -1,7 +1,20 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# @Author   : Chiupam (https://t.me/chiupam)
+# @Data     : 2021-05-31 18：56
+# @Version  : v1.2
+# @Updata   : 1. 添加每日签到功能
+# @Future   : Null
+
 import requests, json, time
 
 
-def everyWeek(Cookie): # 每周青年大学习
+def everyWeek(Cookie):
+    """
+     每周青年大学习
+    :param Cookie: 传入 Cookie
+    :return: 返回是否成功完成 POST 请求的布尔值
+    """
     url = 'http://home.yngqt.org.cn/qndxx/xuexi.ashx'
     headers = {
         "Host": "home.yngqt.org.cn",
@@ -32,7 +45,12 @@ def everyWeek(Cookie): # 每周青年大学习
         return False
 
 
-def everyDay(Cookie): # 每日签到领积分
+def everyDay(Cookie):
+    """
+    每日签到领积分
+    :param Cookie: 传入 Cookie
+    :return: 返回是否成功完成 POST 请求的布尔值
+    """
     url = "http://home.yngqt.org.cn/qndxx/user/qiandao.ashx"
     headers = {
         "Host": "home.yngqt.org.cn",
@@ -62,6 +80,12 @@ def everyDay(Cookie): # 每日签到领积分
 
 
 def main(event, context):
+    """
+    腾讯云函数程序入口
+    :param event: 可省略
+    :param context: 可省略
+    :return: 可省略
+    """
     with open('./cookie.txt', 'r', encoding='utf-8') as f:
         Cookie = f.readline()[:-1]
     if time.localtime()[6] in [0,1,2]: # 周一、周二、周三各学习一遍
@@ -71,7 +95,7 @@ def main(event, context):
             if result:
                 break
             else:
-                print(f'每周阅读失败，准备重试……')
+                print('每周阅读失败，准备重试……')
                 i -= 1
     i = 3
     while i:
@@ -79,7 +103,7 @@ def main(event, context):
         if result:
             break
         else:
-            print(f'每日签到失败，准备重试……')
+            print('每日签到失败，准备重试……')
             i -= 1
 
 
