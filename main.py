@@ -11,10 +11,11 @@ import requests, json, time
 
 def everyWeek(Cookie):
     """
-     每周青年大学习
+    每周青年大学习
     :param Cookie: 传入 Cookie
     :return: 返回是否成功完成 POST 请求的布尔值
     """
+    task = '每周青年大学习\n'
     url = 'http://home.yngqt.org.cn/qndxx/xuexi.ashx'
     headers = {
         "Host": "home.yngqt.org.cn",
@@ -35,13 +36,18 @@ def everyWeek(Cookie):
         r = requests.post(url, data=json.dumps(data), headers=headers, proxies={"http": None, "https": None})
         r.encoding = r.apparent_encoding
         if r.ok:
-            print(r.json()['message'])
-            return True
+            res = r.json()
+            if res['message'].find('成功') != -1 or res['message'].find('已学习') != -1:
+                print(f"{task}{res['message']}")
+                return True
+            else:
+                print(f"{task}{res['message']}")
+                return False
         else:
-            print(f'每周阅读：发生未知错误：\n{r.text}')
+            print(f'{task}POST 完成后发生未知错误，错误信息如下：\n{r.text}')
             return False
     except Exception as e:
-        print(e)
+        print(f"{task}无法完成 POST 访问，错误信息如下：\n{e}")
         return False
 
 
@@ -51,6 +57,7 @@ def everyDay(Cookie):
     :param Cookie: 传入 Cookie
     :return: 返回是否成功完成 POST 请求的布尔值
     """
+    task = '每日签到领积分\n'
     url = "http://home.yngqt.org.cn/qndxx/user/qiandao.ashx"
     headers = {
         "Host": "home.yngqt.org.cn",
@@ -69,13 +76,18 @@ def everyDay(Cookie):
         r = requests.post(url, headers=headers, proxies={"http": None, "https": None})
         r.encoding = r.apparent_encoding
         if r.ok:
-            print(r.json()['message'])
-            return True
+            res = r.json()
+            if res['message'].find('成功') != -1 or res['message'].find('已签到') != -1:
+                print(f"{task}{res['message']}")
+                return True
+            else:
+                print(f"{task}{res['message']}")
+                return False
         else:
-            print(f'每日签到：发生未知错误：\n{r.text}')
+            print(f'{task}POST 完成后发生未知错误，错误信息如下：\n{r.text}')
             return False
     except Exception as e:
-        print(e)
+        print(f"{task}无法完成 POST 访问，错误信息如下：\n{e}")
         return False
 
 
