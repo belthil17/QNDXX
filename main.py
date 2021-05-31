@@ -23,8 +23,12 @@ def everyWeek(Cookie): # 每周青年大学习
         r.encoding = r.apparent_encoding
         if r.ok:
             res = r.json()
-            print(res['message'])
-            return True
+            if res['code'] == '100' or res['code'] == '102':
+                print(res['message'])
+                return True
+            else:
+                print(res['message'])
+                return False
         else:
             print(f'每周阅读：发生未知错误：\n{r.text}')
             return False
@@ -53,8 +57,12 @@ def everyDay(Cookie): # 每日签到领积分
         r.encoding = r.apparent_encoding
         if r.ok:
             resp = r.json()
-            print(resp['message'])
-            return True
+            if resp['code'] == '100' or resp['code'] == '-1':
+                print(resp['message'])
+                return True
+            else:
+                print(resp['message'])
+                return False
         else:
             print(f'每日签到：发生未知错误：\n{r.text}')
             return False
