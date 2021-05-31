@@ -1,4 +1,4 @@
-import requests, json, time
+import requests, json, time, datetime
 
 
 def everyWeek(Cookie): # 每周青年大学习
@@ -26,7 +26,7 @@ def everyWeek(Cookie): # 每周青年大学习
             print(res['message'])
             return True
         else:
-            print(f'每周阅读发生未知错误：\n{r.text}')
+            print(f'每周阅读：发生未知错误：\n{r.text}')
             return False
     except Exception as e:
         print(e)
@@ -56,7 +56,7 @@ def everyDay(Cookie): # 每日签到领积分
             print(resp['message'])
             return True
         else:
-            print(f'每日签到发生未知错误：\n{r.text}')
+            print(f'每日签到：发生未知错误：\n{r.text}')
             return False
     except Exception as e:
         print(e)
@@ -67,22 +67,31 @@ def main(event, context):
     with open('./config.json', 'r', encoding='utf-8') as f:
         Cookie = json.load(f)['Cookie']
     if time.localtime()[6] in [0,1,2]: # 周一、周二、周三各学习一遍
-        i = 0
-        while everyWeek(Cookie):
-            i += 1
-            print(f'每周阅读：休眠 30 秒后，准备进行第{i}次重试……')
-            time.sleep(30)
-        i = 0
-        while everyDay(Cookie):
-            i += 1
-            print(f'每日签到：休眠 30 秒后，准备进行第{i}次重试……')
-            time.sleep(30)
+        i = 3
+        while i:
+            result = everyWeek(Cookie)
+            if result:
+                break
+            else:
+                print(f'每周阅读失败，准备重试……')
+                i -= 1
+        i = 3
+        while i:
+            result = everyDay(Cookie)
+            if result:
+                break
+            else:
+                print(f'每日签到失败，准备重试……')
+                i -= 1
     else:
-        i = 0
-        while everyDay(Cookie):
-            i += 1
-            print(f'每日签到：休眠 30 秒后，准备进行第{i}次重试……')
-            time.sleep(30)
+        i = 3
+        while i:
+            result = everyDay(Cookie)
+            if result:
+                break
+            else:
+                print(f'每日签到失败，准备重试……')
+                i -= 1
 
 
 if __name__ == '__main__':
