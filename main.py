@@ -1,4 +1,4 @@
-import requests, json, time, datetime
+import requests, json, time
 
 
 def everyWeek(Cookie): # 每周青年大学习
@@ -22,13 +22,8 @@ def everyWeek(Cookie): # 每周青年大学习
         r = requests.post(url, data=json.dumps(data), headers=headers, proxies={"http": None, "https": None})
         r.encoding = r.apparent_encoding
         if r.ok:
-            res = r.json()
-            if res['code'] == '100' or res['code'] == '102':
-                print(res['message'])
-                return True
-            else:
-                print(res['message'])
-                return False
+            print(r.json()['message'])
+            return True
         else:
             print(f'每周阅读：发生未知错误：\n{r.text}')
             return False
@@ -56,13 +51,8 @@ def everyDay(Cookie): # 每日签到领积分
         r = requests.post(url, headers=headers, proxies={"http": None, "https": None})
         r.encoding = r.apparent_encoding
         if r.ok:
-            resp = r.json()
-            if resp['code'] == '100' or resp['code'] == '-1':
-                print(resp['message'])
-                return True
-            else:
-                print(resp['message'])
-                return False
+            print(r.json()['message'])
+            return True
         else:
             print(f'每日签到：发生未知错误：\n{r.text}')
             return False
@@ -72,8 +62,6 @@ def everyDay(Cookie): # 每日签到领积分
 
 
 def main(event, context):
-    # with open('./config.json', 'r', encoding='utf-8') as f:
-    #     Cookie = json.load(f)['Cookie']
     with open('./cookie.txt', 'r', encoding='utf-8') as f:
         Cookie = f.readline()[:-1]
     if time.localtime()[6] in [0,1,2]: # 周一、周二、周三各学习一遍
