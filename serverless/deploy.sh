@@ -2,7 +2,7 @@
 echo "开始拷贝必要文件"
 sudo cp main.py ./serverless
 sudo cp requirements.txt ./serverless
-sudo cp config.json ./serverless
+#sudo cp config.json ./serverless
 sudo cp cookie.txt ./serverless
 cd ./serverless
 
