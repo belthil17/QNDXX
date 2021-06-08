@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # @Author   : Chiupam (https://t.me/chiupam)
-# @Data     : 2021-05-31 18：56
-# @Version  : v1.2
-# @Updata   : 1. 添加每日签到功能
+# @Data     : 2021-06-08 19:58
+# @Version  : v1.3
+# @Updata   : 1. 支持多账号学习
 # @Future   : Null
 
 import requests, json, time
@@ -98,25 +98,26 @@ def main(event, context):
     :param context: 可省略
     :return: 可省略
     """
-    with open('./cookie.txt', 'r', encoding='utf-8') as f:
-        Cookie = f.readline()[:-1]
-    if time.localtime()[6] in [0,1,2]: # 周一、周二、周三各学习一遍
+    with open('./cookie.json', 'r', encoding='utf-8') as f:
+        cookies = json.load(f)
+    for cookie in cookies:
+        if time.localtime()[6] in [0,1,2]: # 周一、周二、周三各学习一遍
+            i = 3
+            while i:
+                result = everyWeek(cookie)
+                if result:
+                    break
+                else:
+                    print('每周阅读失败，准备重试……')
+                    i -= 1
         i = 3
         while i:
-            result = everyWeek(Cookie)
+            result = everyDay(cookie)
             if result:
                 break
             else:
-                print('每周阅读失败，准备重试……')
+                print('每日签到失败，准备重试……')
                 i -= 1
-    i = 3
-    while i:
-        result = everyDay(Cookie)
-        if result:
-            break
-        else:
-            print('每日签到失败，准备重试……')
-            i -= 1
 
 
 if __name__ == '__main__':
