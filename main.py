@@ -106,7 +106,7 @@ def main(event, context):
             while i:
                 result = everyWeek(cookie)
                 if result:
-                    break
+                    i = 0
                 else:
                     print('每周阅读失败，准备重试……')
                     i -= 1
@@ -114,7 +114,7 @@ def main(event, context):
         while i:
             result = everyDay(cookie)
             if result:
-                break
+                i = 0
             else:
                 print('每日签到失败，准备重试……')
                 i -= 1
