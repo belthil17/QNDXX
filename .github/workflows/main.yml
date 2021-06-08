@@ -39,5 +39,5 @@ jobs:
     - name: Build and publish
       if: env.COOKIE
       run: |
-        echo "$COOKIE" > ./cookie.txt
+        echo "$COOKIE" > ./cookie.json
         python main.py
